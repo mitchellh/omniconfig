@@ -1,5 +1,5 @@
 require "omniconfig/version"
 
-module Omniconfig
+module OmniConfig
   # Your code goes here...
 end
