@@ -26,6 +26,10 @@ module OmniConfig
   # define the schema of configuration. They do not handle loading or reading
   # configuration on their own.
   class Structure
+    # The members that have been defined on this structure. DO NOT modify this
+    # hash in place under any circumstances.
+    attr_reader :members
+
     def initialize
       @members = {}
     end

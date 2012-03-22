@@ -63,7 +63,7 @@ module OmniConfig
         raw = loader.load
 
         # Go through each defined setting in our schema and load it in
-        @structure.each do |key, type|
+        @structure.members.each do |key, type|
           value = UNSET_VALUE
           value = raw[key] if raw.has_key?(key)
 
