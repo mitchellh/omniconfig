@@ -52,5 +52,37 @@ module OmniConfig
     def add_loader(loader)
       @loaders << loader
     end
+
+    # Loads the configuration using the loaders and structure of this instance.
+    def load
+      settings = {}
+
+      # Load all the settings from the loaders in the order they were added.
+      @loaders.each do |loader|
+        # Load the raw settings (this should return a Hash)
+        raw = loader.load
+
+        # Go through each defined setting in our schema and load it in
+        @structure.each do |key, type|
+          value = UNSET_VALUE
+          value = raw[key] if raw.has_key?(key)
+
+          # Coerce into the type we want.
+          value = type.value(value)
+
+          # Set the value on our actual settings. If we haven't seen it yet,
+          # then we just set it. Otherwise we have to do a merge, which can
+          # be customized by the type, or we just choose this value because it
+          # came later if the type doesn't define a merge.
+          if settings.has_key?(key) && type.respond_to?(:merge)
+            settings[key] = type.merge(settings[key], value)
+          else
+            settings[key] = value
+          end
+        end
+      end
+
+      # XXX: Return a Result object
+    end
   end
 end
