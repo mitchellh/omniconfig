@@ -28,4 +28,15 @@ module OmniConfig
   def self.new(*args)
     Config.new(*args)
   end
+
+  # This is a shortcut for initializing a {Structure} object. If a block is
+  # given, the new structure will be yielded to it, so you can modify it
+  # in place. Finally, the new structure will be returned.
+  #
+  # @return [Structure]
+  def self.structure
+    result = Structure.new
+    yield result if block_given?
+    result
+  end
 end
