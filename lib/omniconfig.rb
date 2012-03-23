@@ -1,3 +1,4 @@
+require "omniconfig/errors"
 require "omniconfig/version"
 
 module OmniConfig
@@ -15,6 +16,7 @@ module OmniConfig
   end
 
   module Type
+    autoload :Any,    'omniconfig/type/any'
     autoload :String, 'omniconfig/type/string'
   end
 

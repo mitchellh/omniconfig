@@ -61,5 +61,31 @@ module OmniConfig
       # Set it, overriding any previously potentially set member
       @members[key.to_s] = type
     end
+
+    # Converts a raw input into this structure. This is the method that
+    # allows any arbitrary structure to be a configuration type as well,
+    # so you can enforce that certain keys are of a certain structure:
+    #
+    # ```ruby
+    # person = Structure.new("name" => String)
+    # family = Structure.new("father" => person, "mother" => person)
+    # ```
+    #
+    # @param [Hash] raw
+    # @return [Hash]
+    def value(raw)
+      raise TypeError if !raw.is_a?(Hash)
+
+      # Build up the result with only valid members, converting the types
+      # properly as we go.
+      result = {}
+      @members.each do |key, type|
+        if raw.has_key?(key)
+          result[key] = type.value(raw[key])
+        end
+      end
+
+      result
+    end
   end
 end

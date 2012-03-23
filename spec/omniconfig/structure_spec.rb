@@ -21,4 +21,19 @@ describe OmniConfig::Structure do
     instance.members.should_not have_key(:foo)
     instance.members["foo"].should == "bar"
   end
+
+  describe "value parsing" do
+    it "should raise a TypeError if not a hash" do
+      expect { instance.value(7) }.to raise_error(OmniConfig::TypeError)
+    end
+
+    it "should work with a valid structure" do
+      instance.define("foo", OmniConfig::Type::Any)
+      instance.define("bar", OmniConfig::Type::Any)
+
+      original = { "foo" => 1, "bar" => "2", "baz" => 3 }
+      expected = { "foo" => 1, "bar" => "2" }
+      instance.value(original).should == expected
+    end
+  end
 end
