@@ -136,10 +136,26 @@ verifying that these values are valid. For example, if you ask for a `Float`
 type and it is configured with the value `google.com`, then this is obviously
 invalid, and the type is responsible for raising an exception in this case.
 
+### {OmniConfig::Type::Any Any}
+
+Returns the raw value as-is and does no type-checking or conversion whatsoever.
+This is mostly useful if you want to decode some type yourself, although even
+for that you should use a custom type, since they're so easy to write.
+
 ### {OmniConfig::Type::String String}
 
 Returns the string version of any value. The only value that will not be
 changed is `nil`, which will remain `nil`.
+
+### {OmniConfig::Structure Structure}
+
+Any built structure can be a valid type. This is extremely possible since
+it lets you build up arbitrarily complex types. For example:
+
+```ruby
+person   = OmniConfig.structure("name" => String)
+marriage = OmniConfig.structure("father" => person, "mother" => person)
+```
 
 ### Custom
 
