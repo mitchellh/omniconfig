@@ -18,6 +18,12 @@ describe OmniConfig do
       described_class.structure.should be_kind_of(OmniConfig::Structure)
     end
 
+    it "should forward args to the structure" do
+      struct = described_class.structure("foo" => "bar")
+      struct.should be_kind_of(OmniConfig::Structure)
+      struct.members["foo"].should == "bar"
+    end
+
     it "should yield it so it can be modified" do
       yielded = nil
       result  = described_class.structure { |s| yielded = s }

@@ -39,8 +39,8 @@ module OmniConfig
   # in place. Finally, the new structure will be returned.
   #
   # @return [Structure]
-  def self.structure
-    result = Structure.new
+  def self.structure(*args)
+    result = Structure.new(*args)
     yield result if block_given?
     result
   end
