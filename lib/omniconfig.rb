@@ -8,7 +8,6 @@ module OmniConfig
   UNSET_VALUE = Object.new
 
   autoload :Config,    'omniconfig/config'
-  autoload :Result,    'omniconfig/result'
   autoload :Structure, 'omniconfig/structure'
 
   module Loader
