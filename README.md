@@ -26,13 +26,13 @@ Defining a schema for your configuration is easy:
 
 ```ruby
 person = OmniConfig.structure do |s|
-  s.define("name", OmniConfig::Types::String)
-  s.define("age", OmniConfig::Types::Integer)
+  s.define("name", OmniConfig::Type::String)
+  s.define("age", OmniConfig::Type::Integer)
 end
 
 root = OmniConfig.structure do |s|
-  s.define("manager", OmniConfig::Types::String)
-  s.define("employees", OmniConfig::Types::List, person)
+  s.define("manager", OmniConfig::Type::String)
+  s.define("employees", OmniConfig::Type::List, person)
 end
 ```
 
