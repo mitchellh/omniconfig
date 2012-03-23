@@ -14,7 +14,7 @@ should become a dependency for whatever application or library you're
 installing.
 
 ```console
-gem install omniconfig
+$ gem install omniconfig
 ```
 
 ## Getting Started
