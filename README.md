@@ -2,12 +2,12 @@
 
 [![Build Status](https://secure.travis-ci.org/mitchellh/omniconfig.png?branch=master)](http://travis-ci.org/mitchellh/omniconfig)
 
-Omniconfig is a Ruby configuration library that allows Ruby libraries
-and applications to be configured by _anything_. For web applications,
-this may be useful as service configuration can come from a central
-source such as ZooKeeper. For command line applications, this is useful
-because the application configuration itself can potentially be in
-any format: Ruby, Python, XML, etc.
+OmniConfig is a Ruby library that provides flexible configuration for your
+applications or libraries. The key idea behind OmniConfig is the separation
+of configuration definition and configuration loading. This allows you to
+define your available configuration values, and have that configuration
+loaded from anywhere, such as JSON files, Ruby structures, a remote server
+(like ZooKeeper), etc.
 
 ## Installation
 
