@@ -2,6 +2,16 @@ module OmniConfig
   # Provides some utility methods when dealing with types in order
   # to have the proper behavior.
   class TypeUtil
+    # Returns an instance of the given type. This properly instantiates
+    # a type if it needs to.
+    #
+    # @param [Object] type THe type to instantiate.
+    # @return [Object] Instance of the type
+    def self.instance(type)
+      type = type.new if type.is_a?(Class)
+      type
+    end
+
     # Returns the properly typed value for the given type and value.
     # Types aren't required to implement `value` so this utility method
     # properly handles that case.

@@ -158,6 +158,22 @@ kinds of values, with their respective conversions:
 .25 => 0
 ```
 
+### {OmniConfig::Type::List List}
+
+Matches a list of elements of a specific type. Supporting multiple types may
+come in the future, and would be easy enough to add. The result is a Ruby
+`Array` of the given element type:
+
+```ruby
+people = OmniConfig.structure("people" => List.new(String))
+```
+
+The above would match the JSON string:
+
+```javascript
+["Mitchell", "Bryan", "Sara", "Jeff"]
+```
+
 ### {OmniConfig::Type::String String}
 
 Returns the string version of any value. The only value that will not be

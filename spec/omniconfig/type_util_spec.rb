@@ -2,6 +2,17 @@ require File.expand_path("../../setup", __FILE__)
 require "omniconfig"
 
 describe OmniConfig::TypeUtil do
+  describe "instance" do
+    it "should return the instance given if given" do
+      described_class.instance("foo").should == "foo"
+    end
+
+    it "should instantiate a class if given" do
+      type = Class.new
+      described_class.instance(type).should be_kind_of(type)
+    end
+  end
+
   describe "value" do
     it "should return the raw value if the type doesn't respond to value" do
       described_class.value("FOO", "value").should == "value"

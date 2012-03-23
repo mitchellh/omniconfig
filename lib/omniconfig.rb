@@ -19,6 +19,7 @@ module OmniConfig
   module Type
     autoload :Any,     'omniconfig/type/any'
     autoload :Integer, 'omniconfig/type/integer'
+    autoload :List,    'omniconfig/type/list'
     autoload :String,  'omniconfig/type/string'
   end
 
