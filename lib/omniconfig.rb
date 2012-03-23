@@ -17,8 +17,9 @@ module OmniConfig
   end
 
   module Type
-    autoload :Any,    'omniconfig/type/any'
-    autoload :String, 'omniconfig/type/string'
+    autoload :Any,     'omniconfig/type/any'
+    autoload :Integer, 'omniconfig/type/integer'
+    autoload :String,  'omniconfig/type/string'
   end
 
   # This is a shorcut for initializing a {Config} object. This is provided

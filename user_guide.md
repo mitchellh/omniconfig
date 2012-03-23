@@ -142,6 +142,22 @@ Returns the raw value as-is and does no type-checking or conversion whatsoever.
 This is mostly useful if you want to decode some type yourself, although even
 for that you should use a custom type, since they're so easy to write.
 
+### {OmniConfig::Type::Integer Integer}
+
+Matches integer values and converts them into integers. This doesn't simply
+call Ruby's `to_i` method, since that is a bit too flexible (`"foo".to_i`
+is 0!). Instead, numerics are converted to integers, and everyting else
+is converted to a string, matched against some regular expression, then
+converted to an integer. The end result is that this type matches the following
+kinds of values, with their respective conversions:
+
+```
+0.2 => 0
+2   => 2
+2.2 => 2
+.25 => 0
+```
+
 ### {OmniConfig::Type::String String}
 
 Returns the string version of any value. The only value that will not be
