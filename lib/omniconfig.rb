@@ -13,7 +13,8 @@ module OmniConfig
   autoload :TypeUtil,  'omniconfig/type_util'
 
   module Loader
-    autoload :Hash,    'omniconfig/loader/hash'
+    autoload :Hash,       'omniconfig/loader/hash'
+    autoload :JSONString, 'omniconfig/loader/json'
   end
 
   module Type
