@@ -9,6 +9,8 @@ define your available configuration values, and have that configuration
 loaded from anywhere, such as JSON files, Ruby structures, a remote server
 (like ZooKeeper), etc.
 
+For documentation, there is a comprehensive [user guide available.](https://github.com/mitchellh/omniconfig/blob/master/user_guide.md).
+
 ## Installation
 
 Omniconfig is distributed as a gem. Any software that wants to be configured
