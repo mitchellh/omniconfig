@@ -14,6 +14,7 @@ module OmniConfig
 
   module Loader
     autoload :Hash,       'omniconfig/loader/hash'
+    autoload :JSONFile,   'omniconfig/loader/json'
     autoload :JSONString, 'omniconfig/loader/json'
   end
 
