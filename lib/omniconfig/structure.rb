@@ -17,9 +17,10 @@ module OmniConfig
   # An example structure is defined below:
   #
   # ```ruby
-  # struct = OmniConfig::Structure.new
-  # struct.define("name", OmniConfig::Type::String)
-  # struct.define("age", OmniConfig::Type::Integer)
+  # struct = OmniConfig.structure({
+  #   "name" => OmniConfig::Type::String,
+  #   "age"  => OmniConfig::Type::Integer
+  # })
   # ```
   #
   # Note that structures alone are not useful. They are simply a means to
@@ -30,8 +31,21 @@ module OmniConfig
     # hash in place under any circumstances.
     attr_reader :members
 
-    def initialize
+    # Create a new structure. The shortcut {OmniConfig.structure} should be
+    # used instead.
+    #
+    # @param [Hash] structure The structure to build where key is the key to
+    #   define and value is the type. You can also always call {#define}.
+    def initialize(structure=nil)
       @members = {}
+
+      # A hash structure can optionally be specified as a shortcut to
+      # define a structure.
+      if structure
+        structure.each do |key, value|
+          define(key, value)
+        end
+      end
     end
 
     def define(key, type)

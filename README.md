@@ -25,15 +25,18 @@ a finite set of configuration parameters.
 Defining a schema for your configuration is easy:
 
 ```ruby
-person = OmniConfig.structure do |s|
-  s.define("name", OmniConfig::Type::String)
-  s.define("age", OmniConfig::Type::Integer)
-end
+# This lets us drop the namespace for the types, not necessary but helpful
+include OmniConfig::Type
 
-root = OmniConfig.structure do |s|
-  s.define("manager", OmniConfig::Type::String)
-  s.define("employees", OmniConfig::Type::List, person)
-end
+person = OmniConfig.structure({
+  "name" => String,
+  "age"  => Integer
+})
+
+root = OmniConfig.structure({
+  "manager"   => String,
+  "employees" => List.new(person)
+})
 ```
 
 The easiest way to show what the above schema looks like is using JSON.
