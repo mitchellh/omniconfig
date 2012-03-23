@@ -15,8 +15,6 @@ describe OmniConfig::Result do
   end
 
   it "properly raises a NoMethodError if an invalid attribute is given" do
-    pending "Not quite sure why this fails. Wait until internet."
-
     instance = described_class.new({})
     expect { instance.foo }.to raise_error(NoMethodError)
   end

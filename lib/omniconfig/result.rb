@@ -28,10 +28,10 @@ module OmniConfig
     # class.
     def method_missing(name, *args, &block)
       # We only deal with string names
-      name = name.to_s
+      key = name.to_s
 
       # Return the setting if we have it
-      return @settings[name] if @settings.has_key?(name)
+      return @settings[key] if @settings.has_key?(key)
 
       # Otherwise let inheritance deal with it
       super
