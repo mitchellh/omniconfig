@@ -81,7 +81,27 @@ module OmniConfig
       result = {}
       @members.each do |key, type|
         if raw.has_key?(key)
-          result[key] = type.value(raw[key])
+          result[key] = TypeUtil.value(type, raw[key])
+        end
+      end
+
+      result
+    end
+
+    # Merge behavior for structures used as a type. This generally shouldn't
+    # be called by the general public.
+    #
+    # The merge behavior for a structure is to do a deep merge, merging each
+    # individual field within.
+    def merge(old, new)
+      result = {}
+      @members.each do |key, type|
+        if old.has_key?(key) && !new.has_key?(key)
+          result[key] = old[key]
+        elsif !old.has_key?(key) && new.has_key?(key)
+          result[key] = new[key]
+        elsif old.has_key?(key) && new.has_key?(key)
+          result[key] = TypeUtil.merge(type, old[key], new[key])
         end
       end
 

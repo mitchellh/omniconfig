@@ -36,4 +36,19 @@ describe OmniConfig::Structure do
       instance.value(original).should == expected
     end
   end
+
+  describe "value merging" do
+    it "should merge properly" do
+      instance.define("foo", OmniConfig::Type::Any)
+      instance.define("bar", OmniConfig::Type::Any)
+      instance.define("baz", OmniConfig::Type::Any)
+
+      old = { "foo" => 5, "baz" => 15 }
+      new = { "bar" => 10, "baz" => 20 }
+      result = instance.merge(old, new)
+      result["foo"].should == 5
+      result["bar"].should == 10
+      result["baz"].should == 20
+    end
+  end
 end
