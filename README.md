@@ -25,13 +25,15 @@ a finite set of configuration parameters.
 Defining a schema for your configuration is easy:
 
 ```ruby
-person = OmniConfig::Structure.new
-person.define("name", OmniConfig::Types::String)
-person.define("age", OmniConfig::Types::Integer)
+person = OmniConfig.structure do |s|
+  s.define("name", OmniConfig::Types::String)
+  s.define("age", OmniConfig::Types::Integer)
+end
 
-root = OmniConfig;:Structure.new
-root.define("manager", OmniConfig::Types::String)
-root.define("employees", OmniConfig::Types::List, person)
+root = OmniConfig.structure do |s|
+  s.define("manager", OmniConfig::Types::String)
+  s.define("employees", OmniConfig::Types::List, person)
+end
 ```
 
 The easiest way to show what the above schema looks like is using JSON.
@@ -54,8 +56,7 @@ tell it of your schema, and assign a set of loaders to it which know
 how to load actual configuration from specific sources:
 
 ```ruby
-config = OmniConfig.new
-config.set_structure(root)
+config = OmniConfig.new(root)
 config.add_loader(OmniConfig::Loader::JSON.new("config.json"))
 config.add_loader(OmniConfig::Loader::Ruby.new("config.rb"))
 config.add_loader(OmniConfig::Loader::CommandLine.new)
@@ -70,11 +71,11 @@ example).
 Finally, load it, and use your new configuration:
 
 ```
-settings = config.load!
+settings = config.load
 
 # Use it
-puts "The manager is: #{settings.manager}"
-puts "Employees count: #{settings.employees.length}"
+puts "The manager is: #{settings["manager"]}"
+puts "Employees count: #{settings["employees"].length}"
 ```
 
 Amazing! The true power in this approach is that there is a distinct separation
