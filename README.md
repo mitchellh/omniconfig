@@ -1,5 +1,7 @@
 # OmniConfig
 
+[![Build Status](https://secure.travis-ci.org/mitchellh/omniconfig.png?branch=master)](http://travis-ci.org/mitchellh/omniconfig)
+
 Omniconfig is a Ruby configuration library that allows Ruby libraries
 and applications to be configured by _anything_. For web applications,
 this may be useful as service configuration can come from a central
