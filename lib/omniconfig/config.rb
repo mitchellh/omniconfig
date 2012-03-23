@@ -1,6 +1,6 @@
 module OmniConfig
   # Represents a root configuration structure along with a set of loaders,
-  # and is used to load the final {Result} object.
+  # and is used to load the final result object.
   #
   # **Note:** While you may instantiate this class directly, {OmniConfig.new}
   # is a shortcut for creating this class, since `OmniConfig::Config` is a bit
@@ -8,7 +8,7 @@ module OmniConfig
   #
   # This class is the main class which knows about both the configuration schema
   # as well as the various methods of loading configuration. With this information,
-  # calling {#load} will return a {Result} object which contains the final loaded
+  # calling {#load} will return a hash object which contains the final loaded
   # configuration.
   #
   # Using this class is simple, and only requires that you give it a root
@@ -28,10 +28,10 @@ module OmniConfig
   #
   # # Load the configuration into our result object
   # result = config.load
-  # puts "Listening on host/port: #{result.host}:#{result.port}"
+  # puts "Listening on host/port: #{result["host"]}:#{result["port"]}"
   # ```
   class Config
-    attr_reader :structure
+    attr_accessor :structure
 
     # Create a new configuration class.
     #
@@ -64,11 +64,14 @@ module OmniConfig
 
         # Go through each defined setting in our schema and load it in
         @structure.members.each do |key, type|
+          # The value by default is the UNSET_VALUE, but if we were able
+          # to load the value, then it is up to the type to convert it
+          # properly.
           value = UNSET_VALUE
-          value = raw[key] if raw.has_key?(key)
-
-          # Coerce into the type we want.
-          value = type.value(value)
+          if raw.has_key?(key)
+            value = raw[key]
+            value = type.value(value) if type.respond_to?(:value)
+          end
 
           # Set the value on our actual settings. If we haven't seen it yet,
           # then we just set it. Otherwise we have to do a merge, which can
@@ -82,7 +85,7 @@ module OmniConfig
         end
       end
 
-      # XXX: Return a Result object
+      settings
     end
   end
 end

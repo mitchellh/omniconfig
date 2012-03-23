@@ -35,6 +35,10 @@ module OmniConfig
     end
 
     def define(key, type)
+      # Instantiate the type if it isn't already
+      type = type.new if type.is_a?(Class)
+
+      # Set it, overriding any previously potentially set member
       @members[key] = type
     end
   end
