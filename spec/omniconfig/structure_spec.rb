@@ -15,4 +15,10 @@ describe OmniConfig::Structure do
     instance.members.should have_key("foo")
     instance.members["foo"].should == "bar"
   end
+
+  it "should force all member keys to be strings" do
+    instance.define(:foo, "bar")
+    instance.members.should_not have_key(:foo)
+    instance.members["foo"].should == "bar"
+  end
 end

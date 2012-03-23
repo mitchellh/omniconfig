@@ -48,12 +48,18 @@ module OmniConfig
       end
     end
 
+    # Define a new member on this structure. If the member was previously
+    # defined then it will be overridden here.
+    #
+    # @param [String] key Key of the configuration
+    # @param [Object] type The type. This can either be a class or an instantiated
+    #   object.
     def define(key, type)
       # Instantiate the type if it isn't already
       type = type.new if type.is_a?(Class)
 
       # Set it, overriding any previously potentially set member
-      @members[key] = type
+      @members[key.to_s] = type
     end
   end
 end
