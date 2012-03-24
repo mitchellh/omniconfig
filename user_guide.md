@@ -274,3 +274,31 @@ result = config.load
 
 result["key"] # => "value"
 ```
+
+### {OmniConfig::Loader::JSONFile JSONFile}
+
+This loads JSON from a file and uses that for configuration. For more
+information on how the JSON is loaded and used, read the `JSONString`
+section below. To use `JSONFile`, just pass the file path as the
+initialization parameter:
+
+```ruby
+config.add_loader(JSONFile.new("/path/to/config.json"))
+```
+
+### {OmniConfig::Loader::JSONString JSONString}
+
+This loads the configuration from a JSON string. The JSON is loaded
+almost purely into a Ruby object as-is, without any changes, so seeing
+how it maps to the schema is fairly straightforward. Example:
+
+```ruby
+schema = OmniConfig.structure("key" => String)
+config = OmniConfig.new(schema)
+config.add_loader(JSONString.new("{ \"key\": \"value\" }"))
+result = config.load
+
+result["key"] # => "value"
+```
+
+**Note:** For the JSON loaders, you will need the `json` gem installed.
