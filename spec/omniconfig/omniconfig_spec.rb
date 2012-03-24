@@ -2,6 +2,9 @@ require File.expand_path("../../setup", __FILE__)
 require "omniconfig"
 
 describe OmniConfig do
+  let(:type) { Class.new(OmniConfig::Type::Base) }
+  let(:type_instance) { type.new }
+
   describe ".new" do
     it "should return a `Config` object when calling `new`" do
       described_class.new.should be_kind_of(OmniConfig::Config)
@@ -19,9 +22,9 @@ describe OmniConfig do
     end
 
     it "should forward args to the structure" do
-      struct = described_class.structure("foo" => "bar")
+      struct = described_class.structure("foo" => type_instance)
       struct.should be_kind_of(OmniConfig::Structure)
-      struct.members["foo"].should == "bar"
+      struct.members["foo"].should == type_instance
     end
 
     it "should yield it so it can be modified" do

@@ -7,7 +7,9 @@ module OmniConfig
       #
       # @param [Object] type The type of the elements.
       def initialize(type)
-        @type = TypeUtil.instance(type)
+        Util.require_type!(type)
+
+        @type = type.instance
       end
 
       def value(raw)
@@ -15,7 +17,7 @@ module OmniConfig
 
         # Map over the array and convert each item to the proper type
         raw.map do |raw_item|
-          TypeUtil.value(@type, raw_item)
+          @type.value(raw_item)
         end
       end
     end

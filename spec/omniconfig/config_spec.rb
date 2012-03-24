@@ -6,7 +6,7 @@ describe OmniConfig::Config do
   let(:structure) { OmniConfig::Structure.new }
 
   let(:smallest_number_type) {
-    Class.new do
+    Class.new(OmniConfig::Type::Base) do
       def merge(old, new)
         [old, new].min
       end
@@ -39,7 +39,7 @@ describe OmniConfig::Config do
     result["key"].should == "bar"
   end
 
-  it "should merge values if the type supports it" do
+  it "should merge values" do
     structure.define("key", smallest_number_type)
     instance.add_loader(OmniConfig::Loader::Hash.new({ "key" => 3 }))
     instance.add_loader(OmniConfig::Loader::Hash.new({ "key" => 2 }))

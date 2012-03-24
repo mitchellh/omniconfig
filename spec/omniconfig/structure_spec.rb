@@ -3,23 +3,29 @@ require "omniconfig"
 
 describe OmniConfig::Structure do
   let(:instance) { described_class.new }
+  let(:type)     { Class.new(OmniConfig::Type::Base) }
+  let(:type_instance) { type.new }
 
   it "should be able to define members using a hash to initialize" do
-    instance = described_class.new("foo" => "bar")
-    instance.members["foo"].should == "bar"
+    instance = described_class.new("foo" => type_instance)
+    instance.members["foo"].should == type_instance
   end
 
   it "should be able to define new members" do
-    expect { instance.define("foo", "bar") }.to_not raise_error
+    expect { instance.define("foo", type_instance) }.to_not raise_error
 
     instance.members.should have_key("foo")
-    instance.members["foo"].should == "bar"
+    instance.members["foo"].should == type_instance
+  end
+
+  it "should raise an error if a schema member type isn't a type" do
+    expect { instance.define(:foo, "bar") }.to raise_error(ArgumentError)
   end
 
   it "should force all member keys to be strings" do
-    instance.define(:foo, "bar")
+    instance.define(:foo, type_instance)
     instance.members.should_not have_key(:foo)
-    instance.members["foo"].should == "bar"
+    instance.members["foo"].should == type_instance
   end
 
   describe "value parsing" do

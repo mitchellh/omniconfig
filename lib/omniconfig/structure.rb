@@ -55,11 +55,11 @@ module OmniConfig
     # @param [Object] type The type. This can either be a class or an instantiated
     #   object.
     def define(key, type)
-      # Instantiate the type if it isn't already
-      type = type.new if type.is_a?(Class)
+      # Verify the type is correct
+      Util.require_type!(type)
 
       # Set it, overriding any previously potentially set member
-      @members[key.to_s] = type
+      @members[key.to_s] = type.instance
     end
 
     # Converts a raw input into this structure. This is the method that
@@ -81,7 +81,7 @@ module OmniConfig
       result = {}
       @members.each do |key, type|
         if raw.has_key?(key)
-          result[key] = TypeUtil.value(type, raw[key])
+          result[key] = type.value(raw[key])
         end
       end
 
@@ -101,7 +101,7 @@ module OmniConfig
         elsif !old.has_key?(key) && new.has_key?(key)
           result[key] = new[key]
         elsif old.has_key?(key) && new.has_key?(key)
-          result[key] = TypeUtil.merge(type, old[key], new[key])
+          result[key] = type.merge(old[key], new[key])
         end
       end
 

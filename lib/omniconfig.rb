@@ -10,7 +10,7 @@ module OmniConfig
 
   autoload :Config,    'omniconfig/config'
   autoload :Structure, 'omniconfig/structure'
-  autoload :TypeUtil,  'omniconfig/type_util'
+  autoload :Util,      'omniconfig/util'
 
   module Loader
     autoload :Hash,       'omniconfig/loader/hash'

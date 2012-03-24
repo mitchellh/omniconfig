@@ -4,7 +4,7 @@ require "omniconfig"
 describe OmniConfig::Type::List do
   let(:instance) { described_class.new(type) }
   let(:type) do
-    Class.new do
+    Class.new(OmniConfig::Type::Base) do
       def value(raw)
         raw.to_s
       end

@@ -68,14 +68,14 @@ module OmniConfig
           # to load the value, then it is up to the type to convert it
           # properly.
           value = UNSET_VALUE
-          value = TypeUtil.value(type, raw[key]) if raw.has_key?(key)
+          value = type.value(raw[key]) if raw.has_key?(key)
 
           # Set the value on our actual settings. If we haven't seen it yet,
           # then we just set it. Otherwise we have to do a merge, which can
           # be customized by the type, or we just choose this value because it
           # came later if the type doesn't define a merge.
           if settings.has_key?(key)
-            settings[key] = TypeUtil.merge(type, settings[key], value)
+            settings[key] = type.merge(settings[key], value)
           else
             settings[key] = value
           end
