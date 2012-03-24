@@ -5,10 +5,8 @@ module OmniConfig
     #
     # This allows you to do your own decoding and type checking,
     # if it pleases you.
-    class Any
-      def value(raw)
-        raw
-      end
+    class Any < Base
+      # Default implementation works fine.
     end
   end
 end

@@ -4,7 +4,7 @@ module OmniConfig
     #
     # This class verifies that the configuration parameter is properly
     # converted to a string value.
-    class String
+    class String < Base
       def value(value)
         # `nil` should remain a nil
         return nil if value.nil?

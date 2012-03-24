@@ -6,7 +6,7 @@ module OmniConfig
     # Ruby's "to_i" conversion is a bit too flexible ("foo".to_i => 0),
     # so this does a basic Regex check on any strings passed in to verify
     # they're numeric in some way.
-    class Integer
+    class Integer < Base
       def value(raw)
         # If the value is numeric, we just convert to an integer, Ruby
         # does the right thing here.

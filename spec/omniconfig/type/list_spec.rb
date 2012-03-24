@@ -11,6 +11,10 @@ describe OmniConfig::Type::List do
     end
   end
 
+  it "should be a type" do
+    instance.should be_kind_of(OmniConfig::Type::Base)
+  end
+
   it "raises an error if the raw value is not an array" do
     expect { instance.value("FOO") }.to raise_error(OmniConfig::TypeError)
   end

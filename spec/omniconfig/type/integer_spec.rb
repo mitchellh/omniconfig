@@ -4,6 +4,10 @@ require "omniconfig"
 describe OmniConfig::Type::Integer do
   let(:instance) { described_class.new }
 
+  it "should be a type" do
+    instance.should be_kind_of(OmniConfig::Type::Base)
+  end
+
   it "returns numerics as fine" do
     instance.value(2) == 2
     instance.value(2.5) == 2

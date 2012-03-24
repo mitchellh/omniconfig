@@ -1,7 +1,7 @@
 module OmniConfig
   module Type
     # A list of elements of a specific type.
-    class List
+    class List < Base
       # Initializes a list type where the elements will be of the given
       # type.
       #

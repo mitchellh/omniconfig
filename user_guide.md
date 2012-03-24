@@ -191,8 +191,9 @@ marriage = OmniConfig.structure("father" => person, "mother" => person)
 
 ### Custom
 
-Building a custom type is easy. Types are basic Ruby classes that can
-implement any of the following methods:
+Types are very simple to create. A type is a class that inherits from
+{OmniConfig::Type::Base OmniConfig::Type::Base}. It can override the
+following methods:
 
 * `value(raw)` - This is given the raw value from the loader and is
   expected to return a value of the proper Ruby type, or to raise an
@@ -207,7 +208,7 @@ So, here is a basic implentation that shows how something simple like
 {OmniConfig::Type::String String} is implemented:
 
 ```ruby
-class StringType
+class StringType < OmniConfig::Type::Base
   def value(raw)
     # Let nil be nil
     return nil if raw.nil?
@@ -222,7 +223,7 @@ Here is another type that converts values to an integer, but also
 handles merge conflicts by taking the smallest integer:
 
 ```ruby
-class SmallestInteger
+class SmallestInteger < OmniConfig::Type::Base
   def value(raw)
     # Convert to an int, always
     raw.to_i
