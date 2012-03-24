@@ -14,4 +14,10 @@ describe OmniConfig::Type::Base do
     new = Object.new
     instance.merge(old, new).should eql(new)
   end
+
+  it "should allow options to be set" do
+    instance.options.should be_kind_of(Hash)
+    instance.options["foo"] = "bar"
+    instance.options["foo"].should == "bar"
+  end
 end
