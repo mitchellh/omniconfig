@@ -4,11 +4,22 @@ module OmniConfig
     # as the inheritance is checked when {Structure#define} is being
     # called.
     class Base
+      # Every type can have arbitrary options added to it that the loaders
+      # might use for some reason. This is the options hash that can be used
+      # to add or modify options.
+      attr_reader :options
+
       # Initializes the type and returns an instance of it.
       #
       # @return [Object] Instantiated type.
       def self.instance
         self.new
+      end
+
+      # Initialize a type, passing in the given options as options to the
+      # type.
+      def initialize(opts=nil)
+        @options = opts || {}
       end
 
       # This just returns this instance. This is useful because there is also
@@ -19,15 +30,6 @@ module OmniConfig
       # @return [Object] self
       def instance
         self
-      end
-
-      # Every type can have arbitrary options added to it that the loaders
-      # might use for some reason. This is the options hash that can be used
-      # to add or modify options.
-      #
-      # @return [Hash]
-      def options
-        @options ||= {}
       end
 
       # By default a type will simply return the raw value as the

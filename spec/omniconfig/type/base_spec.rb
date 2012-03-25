@@ -4,6 +4,11 @@ require "omniconfig"
 describe OmniConfig::Type::Base do
   let(:instance) { described_class.new }
 
+  it "should set options from initialization" do
+    instance = described_class.new(:foo => :bar)
+    instance.options[:foo].should == :bar
+  end
+
   it "should just let values pass through" do
     value = Object.new
     instance.value(value).should eql(value)
