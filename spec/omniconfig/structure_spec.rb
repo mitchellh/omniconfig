@@ -6,6 +6,10 @@ describe OmniConfig::Structure do
   let(:type)     { Class.new(OmniConfig::Type::Base) }
   let(:type_instance) { type.new }
 
+  it "should be a type" do
+    instance.should be_kind_of(OmniConfig::Type::Base)
+  end
+
   it "should be able to define members using a hash to initialize" do
     instance = described_class.new("foo" => type_instance)
     instance.members["foo"].should == type_instance

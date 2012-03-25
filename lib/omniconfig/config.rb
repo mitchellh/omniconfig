@@ -31,15 +31,15 @@ module OmniConfig
   # puts "Listening on host/port: #{result["host"]}:#{result["port"]}"
   # ```
   class Config
-    attr_accessor :structure
+    attr_accessor :schema
 
     # Create a new configuration class.
     #
-    # @param [Structure] structure The root structure. This can always be set later
-    #   with {#set_structure}.
-    def initialize(structure=nil)
-      @loaders   = []
-      @structure = structure
+    # @param [Structure] schema The root schema. This can always be set later
+    #   with `#schema=`.
+    def initialize(schema=nil)
+      @loaders = []
+      @schema  = schema
     end
 
     # Add a loader to the chain of loaders.
@@ -60,10 +60,10 @@ module OmniConfig
       # Load all the settings from the loaders in the order they were added.
       @loaders.each do |loader|
         # Load the raw settings (this should return a Hash)
-        raw = loader.load
+        raw = loader.load(@schema)
 
         # Go through each defined setting in our schema and load it in
-        @structure.members.each do |key, type|
+        @schema.members.each do |key, type|
           # The value by default is the UNSET_VALUE, but if we were able
           # to load the value, then it is up to the type to convert it
           # properly.

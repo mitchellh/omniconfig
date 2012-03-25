@@ -12,7 +12,7 @@ describe OmniConfig do
 
     it "should forward arguments to initialize `Config`" do
       instance = described_class.new("foo")
-      instance.structure.should == "foo"
+      instance.schema.should == "foo"
     end
   end
 

@@ -14,7 +14,7 @@ module OmniConfig
         @value = value
       end
 
-      def load
+      def load(schema)
         # We just return our hash, since that is the format the OmniConfig
         # expects us to return internally.
         return @value

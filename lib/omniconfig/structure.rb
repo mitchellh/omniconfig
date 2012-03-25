@@ -1,3 +1,5 @@
+require "omniconfig/type/base"
+
 module OmniConfig
   # Represents a configuration structure for configuration, which itself
   # has many potential key/value pairs, with keys potentially mapping to
@@ -26,7 +28,7 @@ module OmniConfig
   # Note that structures alone are not useful. They are simply a means to
   # define the schema of configuration. They do not handle loading or reading
   # configuration on their own.
-  class Structure
+  class Structure < Type::Base
     # The members that have been defined on this structure. DO NOT modify this
     # hash in place under any circumstances.
     attr_reader :members

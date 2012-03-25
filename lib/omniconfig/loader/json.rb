@@ -10,13 +10,13 @@ module OmniConfig
         @path = path
       end
 
-      def load
+      def load(schema)
         if !File.file?(@path)
           raise LoaderLoadError, "JSON file doesn't exist: #{@path}"
         end
 
         # Just read the file, and load as a JSON string
-        return JSONString.new(File.read(@path)).load
+        return JSONString.new(File.read(@path)).load(schema)
       end
     end
 
@@ -56,7 +56,7 @@ module OmniConfig
         @raw = raw
       end
 
-      def load
+      def load(schema)
         # Load the JSON parser
         begin
           require 'json'
