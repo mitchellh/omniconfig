@@ -61,6 +61,10 @@ module OmniConfig
       @loaders.each do |loader|
         # Load the raw settings (this should return a Hash)
         raw = loader.load(@schema)
+        if !raw.is_a?(Hash)
+          raise LoaderLoadError,
+            "Loader '#{loader.inspect}' did not return a hash for `load`"
+        end
 
         # Go through each defined setting in our schema and load it in
         @schema.members.each do |key, type|

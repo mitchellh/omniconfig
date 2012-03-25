@@ -48,4 +48,15 @@ describe OmniConfig::Config do
     result = instance.load
     result["key"].should == 2
   end
+
+  it "should throw an exception if a loader doesn't properly return a Hash" do
+    bad_loader = Class.new do
+      def load(schema)
+        nil
+      end
+    end
+
+    instance.add_loader(bad_loader.new)
+    expect { instance.load }.to raise_error(OmniConfig::LoaderLoadError)
+  end
 end
