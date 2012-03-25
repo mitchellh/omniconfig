@@ -10,6 +10,11 @@ describe OmniConfig::Structure do
     instance.should be_kind_of(OmniConfig::Type::Base)
   end
 
+  it "should properly forward up options for the type" do
+    instance = described_class.new(nil, :foo => :bar)
+    instance.options[:foo].should == :bar
+  end
+
   it "should be able to define members using a hash to initialize" do
     instance = described_class.new("foo" => type_instance)
     instance.members["foo"].should == type_instance

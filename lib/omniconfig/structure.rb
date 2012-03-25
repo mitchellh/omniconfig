@@ -38,7 +38,11 @@ module OmniConfig
     #
     # @param [Hash] structure The structure to build where key is the key to
     #   define and value is the type. You can also always call {#define}.
-    def initialize(structure=nil)
+    # @param [Hash] opts Arbitrary options for this structure as a type. These
+    #   have no effect unless a loader uses them in some way.
+    def initialize(structure=nil, opts=nil)
+      super(opts)
+
       @members = {}
 
       # A hash structure can optionally be specified as a shortcut to
