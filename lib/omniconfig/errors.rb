@@ -10,4 +10,17 @@ module OmniConfig
   # Error thrown when a type from the raw configuration is not
   # correct.
   class TypeError < StandardError; end
+
+  # Error thrown when validation of the settings fails.
+  class InvalidConfiguration < StandardError
+    attr_reader :errors
+    attr_reader :settings
+
+    def initialize(settings, errors, message)
+      super(message)
+
+      @errors   = errors
+      @settings = settings
+    end
+  end
 end

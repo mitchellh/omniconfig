@@ -13,6 +13,14 @@ describe OmniConfig::Config do
     end
   }
 
+  let(:positive_type) {
+    Class.new(OmniConfig::Type::Base) do
+      def validate(errors, value)
+        errors.add("Must be positive!") if value < 0
+      end
+    end
+  }
+
   it "should load basic values" do
     config = { "key" => "value" }
     structure.define("key", OmniConfig::Type::String)
@@ -58,5 +66,16 @@ describe OmniConfig::Config do
 
     instance.add_loader(bad_loader.new)
     expect { instance.load }.to raise_error(OmniConfig::LoaderLoadError)
+  end
+
+  it "should throw an exception if there is a validation error" do
+    structure.define("key", positive_type)
+    instance.add_loader(OmniConfig::Loader::Hash.new({ "key" => -7 }))
+
+    expect { instance.load }.to raise_error { |error|
+      error.should be_kind_of(OmniConfig::InvalidConfiguration)
+      error.settings["key"].should == -7
+      error.errors.should == ["Must be positive!"]
+    }
   end
 end

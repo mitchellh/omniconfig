@@ -86,6 +86,18 @@ module OmniConfig
         end
       end
 
+      # Validate the settings.
+      errors = ErrorRecorder.new
+      @schema.members.each do |key, type|
+        type.validate(errors, settings[key])
+      end
+
+      # If there are errors, then throw an exception
+      if !errors.empty?
+        raise InvalidConfiguration.new(settings, errors.errors,
+                                       "Configuration didn't validate.")
+      end
+
       settings
     end
   end
