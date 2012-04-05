@@ -7,6 +7,8 @@ module OmniConfig
       #
       # @param [Object] type The type of the elements.
       def initialize(type)
+        super()
+
         Util.require_type!(type)
 
         @type = type.instance
