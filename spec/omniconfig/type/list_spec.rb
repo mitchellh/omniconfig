@@ -19,6 +19,18 @@ describe OmniConfig::Type::List do
     expect { instance.value("FOO") }.to raise_error(OmniConfig::TypeError)
   end
 
+  it "attempts to convert to array using `to_a` if it can" do
+    instance.value(1..5).should == %W[1 2 3 4 5]
+  end
+
+  it "raises an error if to_a still doesn't convert to an Array" do
+    klass = Class.new do
+      def to_a; "FOO"; end
+    end
+
+    expect { instance.value(klass.new) }.to raise_error(OmniConfig::TypeError)
+  end
+
   it "converts each item to the proper type" do
     raw      = [1, 1.2, "foo"]
     expected = ["1", "1.2", "foo"]

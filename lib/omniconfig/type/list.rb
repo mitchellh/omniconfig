@@ -15,7 +15,10 @@ module OmniConfig
       end
 
       def value(raw)
-        raise TypeError if !raw.is_a?(Array)
+        if !raw.is_a?(Array)
+          raw = raw.to_a if raw.respond_to?(:to_a)
+          raise TypeError if !raw.is_a?(Array)
+        end
 
         # Map over the array and convert each item to the proper type
         raw.map do |raw_item|
