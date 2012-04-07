@@ -22,6 +22,7 @@ module OmniConfig
   module Type
     autoload :Any,     'omniconfig/type/any'
     autoload :Base,    'omniconfig/type/base'
+    autoload :Bool,    'omniconfig/type/bool'
     autoload :Integer, 'omniconfig/type/integer'
     autoload :List,    'omniconfig/type/list'
     autoload :String,  'omniconfig/type/string'
