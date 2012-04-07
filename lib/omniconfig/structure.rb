@@ -52,6 +52,9 @@ module OmniConfig
           define(key, value)
         end
       end
+
+      # If a block was given, then we yield with ourselves
+      yield self if block_given?
     end
 
     # Define a new member on this structure. If the member was previously
