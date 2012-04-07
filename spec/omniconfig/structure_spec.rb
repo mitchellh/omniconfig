@@ -50,6 +50,15 @@ describe OmniConfig::Structure do
       expected = { "foo" => 1, "bar" => "2" }
       instance.value(original).should == expected
     end
+
+    it "should properly set an UNSET_VALUE for values that don't exist" do
+      instance.define("foo", OmniConfig::Type::Any)
+      instance.define("bar", OmniConfig::Type::Any)
+
+      original = { "foo" => 1 }
+      expected = { "foo" => 1, "bar" => OmniConfig::UNSET_VALUE }
+      instance.value(original).should == expected
+    end
   end
 
   describe "value merging" do
@@ -64,6 +73,15 @@ describe OmniConfig::Structure do
       result["foo"].should == 5
       result["bar"].should == 10
       result["baz"].should == 20
+    end
+
+    it "should prefer anything over UNSET_VALUE" do
+      instance.define("foo", OmniConfig::Type::Any)
+
+      old = { "foo" => 5 }
+      new = { "foo" => OmniConfig::UNSET_VALUE }
+      result = instance.merge(old, new)
+      result["foo"].should == 5
     end
   end
 end

@@ -88,6 +88,9 @@ module OmniConfig
       @members.each do |key, type|
         if raw.has_key?(key)
           result[key] = type.value(raw[key])
+        else
+          # Every member of the struct should be present in the resulting value
+          result[key] = UNSET_VALUE
         end
       end
 
@@ -107,7 +110,12 @@ module OmniConfig
         elsif !old.has_key?(key) && new.has_key?(key)
           result[key] = new[key]
         elsif old.has_key?(key) && new.has_key?(key)
-          result[key] = type.merge(old[key], new[key])
+          # If the new value is UNSET, then we don't do anything.
+          if new[key] != UNSET_VALUE
+            result[key] = type.merge(old[key], new[key])
+          else
+            result[key] = old[key]
+          end
         end
       end
 
