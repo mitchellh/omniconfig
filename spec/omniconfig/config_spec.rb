@@ -78,4 +78,25 @@ describe OmniConfig::Config do
       error.errors.should == ["Must be positive!"]
     }
   end
+
+  it "should support wrapping results" do
+    klass = Class.new do
+      attr_reader :original
+
+      def initialize(original)
+        @original = original
+      end
+
+      def wrapped?; true; end
+    end
+
+    structure.define("key", OmniConfig::Type::Any)
+    instance = described_class.new(structure, :result_class => klass)
+    instance.add_loader(OmniConfig::Loader::Hash.new("key" => 10))
+
+    result   = instance.load
+    result.original.should == { "key" => 10 }
+    result.should be_kind_of(klass)
+    result.should be_wrapped
+  end
 end

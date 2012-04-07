@@ -37,9 +37,15 @@ module OmniConfig
     #
     # @param [Structure] schema The root schema. This can always be set later
     #   with `#schema=`.
-    def initialize(schema=nil)
+    # @param [Hash] opts Additional options.
+    # @option opts [Class] :result_class Class to wrap the result in. Typically
+    #   a Hash is just returned.
+    def initialize(schema=nil, opts=nil)
       @loaders = []
       @schema  = schema
+      @opts    = {
+        :result_class => nil
+      }.merge(opts || {})
     end
 
     # Add a loader to the chain of loaders.
@@ -97,6 +103,10 @@ module OmniConfig
         raise InvalidConfiguration.new(settings, errors.errors,
                                        "Configuration didn't validate.")
       end
+
+      # If we specified a result class wrapper, then we should wrap the
+      # settings.
+      settings = @opts[:result_class].new(settings) if @opts[:result_class]
 
       settings
     end
