@@ -8,6 +8,10 @@ describe OmniConfig::Type::Integer do
     instance.should be_kind_of(OmniConfig::Type::Base)
   end
 
+  it "returns nil if nil" do
+    instance.value(nil) == nil
+  end
+
   it "returns numerics as fine" do
     instance.value(2) == 2
     instance.value(2.5) == 2

@@ -8,6 +8,9 @@ module OmniConfig
     # they're numeric in some way.
     class Integer < Base
       def value(raw)
+        # If the value is nil, just return nil
+        return nil if raw.nil?
+
         # If the value is numeric, we just convert to an integer, Ruby
         # does the right thing here.
         return raw.to_i if raw.is_a?(Numeric)
