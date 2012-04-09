@@ -106,6 +106,12 @@ module OmniConfig
     # The merge behavior for a structure is to do a deep merge, merging each
     # individual field within.
     def merge(old, new)
+      # We don't need to merge if one of the values is unset, since that is
+      # pretty straightforward.
+      return new if old == UNSET_VALUE
+      return old if new == UNSET_VALUE
+
+      # Merge member by member
       result = {}
       @members.each do |key, type|
         if old.has_key?(key) && !new.has_key?(key)

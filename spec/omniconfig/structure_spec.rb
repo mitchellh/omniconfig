@@ -90,5 +90,13 @@ describe OmniConfig::Structure do
       result = instance.merge(old, new)
       result["foo"].should == 5
     end
+
+    it "should take the new value if the old one is UNSET" do
+      instance.merge(OmniConfig::UNSET_VALUE, 5).should == 5
+    end
+
+    it "should take the old value if the new one is UNSET" do
+      instance.merge(2, OmniConfig::UNSET_VALUE).should == 2
+    end
   end
 end
