@@ -8,6 +8,10 @@ module OmniConfig
   # unset.
   UNSET_VALUE = Object.new
 
+  # Define a custom `inspect` method so people know what kind of object
+  # this is.
+  def UNSET_VALUE.inspect; "<UNSET VALUE>"; end
+
   autoload :Config,        'omniconfig/config'
   autoload :ErrorRecorder, 'omniconfig/error_recorder'
   autoload :Structure,     'omniconfig/structure'
