@@ -66,6 +66,14 @@ describe OmniConfig::Structure do
       expected = { "foo" => 1, "bar" => OmniConfig::UNSET_VALUE }
       instance.value(original).should == expected
     end
+
+    it "should ignore UNSET values" do
+      instance.define("foo", OmniConfig::Type::Any)
+
+      original = { "foo" => OmniConfig::UNSET_VALUE }
+      expected = { "foo" => OmniConfig::UNSET_VALUE }
+      instance.value(original).should == expected
+    end
   end
 
   describe "value merging" do

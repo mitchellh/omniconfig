@@ -89,7 +89,7 @@ module OmniConfig
       # properly as we go.
       result = {}
       @members.each do |key, type|
-        if raw.has_key?(key)
+        if raw.has_key?(key) && raw[key] != UNSET_VALUE
           result[key] = type.value(raw[key])
         else
           # Every member of the struct should be present in the resulting value
