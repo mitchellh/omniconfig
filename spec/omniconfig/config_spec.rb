@@ -30,12 +30,15 @@ describe OmniConfig::Config do
     result["key"].should == "value"
   end
 
-  it "should mark settings as UNSET if they aren't set" do
-    structure.define("key", OmniConfig::Type::String)
+  it "should use the default value of a type if not set" do
+    type = Class.new(OmniConfig::Type::Base) do
+      def default; "FOO"; end
+    end
+    structure.define("key", type)
     instance.add_loader(OmniConfig::Loader::Hash.new({}))
 
     result = instance.load
-    result["key"].should eql(OmniConfig::UNSET_VALUE)
+    result["key"].should == "FOO"
    end
 
   it "should prefer values loaded later by default" do

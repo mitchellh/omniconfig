@@ -33,6 +33,11 @@ module OmniConfig
         self
       end
 
+      # Returns a default value for this type.
+      def default
+        UNSET_VALUE
+      end
+
       # By default a type will simply return the raw value as the
       # converted result.
       def value(raw)

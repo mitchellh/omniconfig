@@ -77,8 +77,12 @@ module OmniConfig
           # The value by default is the UNSET_VALUE, but if we were able
           # to load the value, then it is up to the type to convert it
           # properly.
-          value = UNSET_VALUE
-          value = type.value(raw[key]) if raw.has_key?(key)
+          value = nil
+          if raw.has_key?(key)
+            value = type.value(raw[key])
+          else
+            value = type.default
+          end
 
           # Set the value on our actual settings. If we haven't seen it yet,
           # then we just set it. Otherwise we have to do a merge, which can

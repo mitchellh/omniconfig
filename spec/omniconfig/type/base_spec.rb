@@ -9,6 +9,10 @@ describe OmniConfig::Type::Base do
     instance.options[:foo].should == :bar
   end
 
+  it "should use UNSET_VALUE as a default" do
+    instance.default.should == OmniConfig::UNSET_VALUE
+  end
+
   it "should just let values pass through" do
     value = Object.new
     instance.value(value).should eql(value)
