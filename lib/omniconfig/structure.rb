@@ -71,6 +71,16 @@ module OmniConfig
       @members[key.to_s] = type.instance
     end
 
+    # The default value for a structure is an empty version of the structure.
+    def default
+      result = {}
+      @members.each do |key, type|
+        result[key] = type.default
+      end
+
+      result
+    end
+
     # Converts a raw input into this structure. This is the method that
     # allows any arbitrary structure to be a configuration type as well,
     # so you can enforce that certain keys are of a certain structure:

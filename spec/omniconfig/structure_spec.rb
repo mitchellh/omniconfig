@@ -44,6 +44,15 @@ describe OmniConfig::Structure do
     instance.members["foo"].should == type_instance
   end
 
+  it "should have a default value of unset members" do
+    instance.define(:foo, type_instance)
+    instance.define(:bar, type_instance)
+    instance.default.should == {
+      "foo" => OmniConfig::UNSET_VALUE,
+      "bar" => OmniConfig::UNSET_VALUE
+    }
+  end
+
   describe "value parsing" do
     it "should raise a TypeError if not a hash" do
       expect { instance.value(7) }.to raise_error(OmniConfig::TypeError)
