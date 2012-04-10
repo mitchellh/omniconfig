@@ -121,7 +121,7 @@ module OmniConfig
         elsif old.has_key?(key) && new.has_key?(key)
           # If the new value is UNSET, then we don't do anything.
           if new[key] != UNSET_VALUE
-            result[key] = type.merge(old[key], new[key])
+            result[key] = merge_member(key, type, old[key], new[key])
           else
             result[key] = old[key]
           end
@@ -129,6 +129,18 @@ module OmniConfig
       end
 
       result
+    end
+
+    # Merges a single member. This method is separated to allow subclasses
+    # to override it.
+    #
+    # @param [String] key
+    # @param [Type::Base] type
+    # @param [Object] old
+    # @param [Object] new
+    # @return [Object] The value to set as the merge result.
+    def merge_member(key, type, old, new)
+      type.merge(old, new)
     end
   end
 end
