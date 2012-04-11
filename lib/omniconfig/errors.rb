@@ -19,8 +19,19 @@ module OmniConfig
     def initialize(settings, errors, message)
       super(message)
 
+      @message  = message
       @errors   = errors
       @settings = settings
+    end
+
+    def to_s
+      result = "#{@message}\n\n"
+
+      @errors.each do |error|
+        result += "* #{error}\n"
+      end
+
+      result
     end
   end
 end
