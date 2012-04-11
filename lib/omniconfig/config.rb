@@ -96,23 +96,33 @@ module OmniConfig
         end
       end
 
-      # Validate the settings.
-      errors = ErrorRecorder.new
-      @schema.members.each do |key, type|
-        type.validate(errors, settings[key])
-      end
-
-      # If there are errors, then throw an exception
-      if !errors.empty?
-        raise InvalidConfiguration.new(settings, errors.errors,
-                                       "Configuration didn't validate.")
-      end
+      # Validate
+      validate(settings)
 
       # If we specified a result class wrapper, then we should wrap the
       # settings.
       settings = @opts[:result_class].new(settings) if @opts[:result_class]
 
       settings
+    end
+
+    # Validate the given configuration to the schema represented by this
+    # configuration object. This will raise an {InvalidConfiguration} error
+    # if the validation fails.
+    #
+    # @param [Hash] config Configuration
+    def validate(config)
+      # Validate the settings.
+      errors = ErrorRecorder.new
+      @schema.members.each do |key, type|
+        type.validate(errors, config[key])
+      end
+
+      # If there are errors, then throw an exception
+      if !errors.empty?
+        raise InvalidConfiguration.new(config, errors.errors,
+                                       "Configuration didn't validate.")
+      end
     end
   end
 end

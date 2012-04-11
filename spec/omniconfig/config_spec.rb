@@ -82,6 +82,16 @@ describe OmniConfig::Config do
     }
   end
 
+  it "should validate arbitrary configurations" do
+    structure.define("key", positive_type)
+
+    expect { instance.validate("key" => -7) }.to raise_error { |error|
+      error.should be_kind_of(OmniConfig::InvalidConfiguration)
+      error.settings["key"].should == -7
+      error.errors.should == ["Must be positive!"]
+    }
+  end
+
   it "should support wrapping results" do
     klass = Class.new do
       attr_reader :original
