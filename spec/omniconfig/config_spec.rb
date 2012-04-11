@@ -82,6 +82,13 @@ describe OmniConfig::Config do
     }
   end
 
+  it "shouldn't validate if told not to" do
+    structure.define("key", positive_type)
+    instance.add_loader(OmniConfig::Loader::Hash.new({ "key" => -7 }))
+
+    expect { instance.load(false) }.to_not raise_error
+  end
+
   it "should validate arbitrary configurations" do
     structure.define("key", positive_type)
 

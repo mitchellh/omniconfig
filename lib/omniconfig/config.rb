@@ -60,7 +60,7 @@ module OmniConfig
     end
 
     # Loads the configuration using the loaders and structure of this instance.
-    def load
+    def load(do_validate=true)
       settings = {}
 
       # Load all the settings from the loaders in the order they were added.
@@ -96,8 +96,8 @@ module OmniConfig
         end
       end
 
-      # Validate
-      validate(settings)
+      # Validate if we were asked to
+      validate(settings) if do_validate
 
       # If we specified a result class wrapper, then we should wrap the
       # settings.
