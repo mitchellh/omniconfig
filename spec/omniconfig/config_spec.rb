@@ -101,9 +101,11 @@ describe OmniConfig::Config do
 
   it "should support wrapping results" do
     klass = Class.new do
+      attr_reader :config
       attr_reader :original
 
-      def initialize(original)
+      def initialize(config, original)
+        @config   = config
         @original = original
       end
 
@@ -115,6 +117,7 @@ describe OmniConfig::Config do
     instance.add_loader(OmniConfig::Loader::Hash.new("key" => 10))
 
     result   = instance.load
+    result.config.should eql(instance)
     result.original.should == { "key" => 10 }
     result.should be_kind_of(klass)
     result.should be_wrapped

@@ -101,7 +101,7 @@ module OmniConfig
 
       # If we specified a result class wrapper, then we should wrap the
       # settings.
-      settings = @opts[:result_class].new(settings) if @opts[:result_class]
+      settings = @opts[:result_class].new(self, settings) if @opts[:result_class]
 
       settings
     end
